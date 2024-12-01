@@ -1,3 +1,5 @@
+import Contact from '@/app/components/Contact'
+import Experience from '@/app/components/Experience'
 import Hero from '@/app/components/Hero'
 import Navbar from '@/app/components/Navbar'
 import Technologies from '@/app/components/Technologies'
@@ -15,6 +17,8 @@ export default function App() {
         <Navbar />
         <Hero />
         <Technologies />
+        <Experience />
+        <Contact />
       </div>
     </div>
   )

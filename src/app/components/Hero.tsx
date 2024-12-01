@@ -5,7 +5,7 @@ import profile from '../assets/raviKumarProfile.webp'
 
 export default function Hero() {
   return (
-    <div className="pb-4 lg:mb-36">
+    <div className="pb-4 mb-16 lg:mb-36">
       <div className="flex flex-wrap lg:flex-row-reverse">
         <div className="w-full lg:w-[50%]">
           <div className="flex justify-center lg:p-8">
@@ -28,10 +28,10 @@ export default function Hero() {
               {HERO_CONTENT}
             </p>
             <Link
-              href="/"
+              href="dungnt-fullstack-cv.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              // download
+              download
               className="bg-white rounded-full p-4 text-sm text-stone-800">
               Download resume
             </Link>
