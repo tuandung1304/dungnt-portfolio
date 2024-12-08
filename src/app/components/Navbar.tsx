@@ -1,20 +1,13 @@
-import Image from 'next/image'
 import Link from 'next/link'
+import { CgVercel } from 'react-icons/cg'
 import { FaFacebook, FaLinkedinIn } from 'react-icons/fa'
-import logo from '../assets/raviKumarLogo.webp'
 
 export default function Navbar() {
   return (
     <nav className="flex items-center justify-between py-6">
       <div className="flex shrink-0 items-center">
         <Link href="/" aria-label="Home">
-          <Image
-            src={logo}
-            className="mx-2"
-            width={50}
-            height={33}
-            alt="logo"
-          />
+          <CgVercel className="text-7xl" />
         </Link>
       </div>
       <div className="flex items-center justify-center gap-4 text-2xl">

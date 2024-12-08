@@ -1,6 +1,7 @@
 'use client'
 import { EXPERIENCES } from '@/app/constants'
 import { motion } from 'framer-motion'
+import Link from 'next/link'
 import React from 'react'
 
 export default function Experience() {
@@ -31,12 +32,17 @@ export default function Experience() {
               initial={{ opacity: 0, x: 100 }}
               transition={{ duration: 1 }}
               className="w-full max-w-xl lg:w-3/4">
-              <h3 className="mb-2 font-semibold">
+              <h3 className="font-semibold">
                 {experience.role} -{' '}
                 <span className="text-sm text-stone-500">
                   {experience.company}
                 </span>
               </h3>
+              <Link
+                href={experience.production}
+                className="text-stone-500 hover:underline">
+                {experience.production}
+              </Link>
               <p className="mb-4 text-stone-400">{experience.description}</p>
               {experience.technologies.map((tech, index) => (
                 <span
