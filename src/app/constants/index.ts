@@ -5,14 +5,8 @@ export const EXPERIENCES = [
     year: '2024 - Present',
     role: 'Full Stack Developer',
     company: 'Avada Group (Shopify App)',
-    description: `Contributed to the development of a messaging support software for customers on the Shopify platform.`,
-    technologies: [
-      'Typescript',
-      'React.js',
-      'Firebase',
-      'Firebase functions',
-      'Facebook integration',
-    ],
+    description: `Contributed to the development of a messaging support software for customers on the Shopify platform, with Facebook integration.`,
+    technologies: ['Typescript', 'React.js', 'Firebase', 'Firebase functions'],
     production: 'https://apps.shopify.com/chatty',
   },
   {
@@ -37,7 +31,13 @@ export const EXPERIENCES = [
     role: 'Frontend Developer',
     company: 'Luci',
     description: `Smart City Management Website, Resident Management`,
-    technologies: ['Typescript', 'React.js', 'Tailwind', 'react-query'],
+    technologies: [
+      'Typescript',
+      'React.js',
+      'Tailwind',
+      'zustand',
+      'react-query',
+    ],
     production: 'https://luci.vn',
   },
 ]
