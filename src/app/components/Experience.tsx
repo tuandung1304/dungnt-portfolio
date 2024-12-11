@@ -40,6 +40,7 @@ export default function Experience() {
               </h3>
               <Link
                 href={experience.production}
+                target="_blank"
                 className="text-stone-500 hover:underline">
                 {experience.production}
               </Link>
