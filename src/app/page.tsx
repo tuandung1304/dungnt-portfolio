@@ -3,6 +3,9 @@ import Experience from '@/app/components/Experience'
 import Hero from '@/app/components/Hero'
 import Navbar from '@/app/components/Navbar'
 import Technologies from '@/app/components/Technologies'
+import Projects from '@/app/components/Projects'
+import Skills from '@/app/components/Skills'
+import Education from '@/app/components/Education'
 
 export default function App() {
   return (
@@ -16,8 +19,11 @@ export default function App() {
       <div className="container mx-auto px-8">
         <Navbar />
         <Hero />
+        <Skills />
         <Technologies />
+        <Projects />
         <Experience />
+        <Education />
         <Contact />
       </div>
     </div>

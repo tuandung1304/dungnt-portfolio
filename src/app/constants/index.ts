@@ -1,12 +1,19 @@
-export const HERO_CONTENT = `I am a dedicated full-stack developer with over 2 years of experience specializing in TypeScript. My expertise spans across modern front-end and back-end technologies, including React, Next.js, Nestjs, PostgreSQL, Prisma, TypeORM, Hasura GraphQL, Firebase. I am passionate about leveraging my skills to build efficient and scalable applications that deliver value to clients and enhance user experiences.`
+export const HERO_CONTENT = `I am a dedicated full-stack developer with over 2 years of experience specializing in TypeScript. My expertise spans across modern front-end and back-end technologies, including React, Next.js, Nestjs, Prisma, Hasura GraphQL, Firebase. I have experience utilizing AWS services to build scalable and secure cloud-based applications. I am passionate about leveraging my skills to build efficient and scalable applications that deliver value to clients and enhance user experiences.`
 
 export const EXPERIENCES = [
   {
     year: '2024 - Present',
     role: 'Full Stack Developer',
     company: 'Avada Group (Shopify App)',
-    description: `Contributed to the development of a messaging support software for customers on the Shopify platform, with Facebook integration.`,
-    technologies: ['Typescript', 'React.js', 'Firebase', 'Firebase functions'],
+    description: `Contributed to the development of a messaging support software for customers on the Shopify platform, with Facebook integration. Integrating AI for the chat feature helps customers ask questions and search for products that meet their needs.
+  `,
+    technologies: [
+      'Typescript',
+      'React.js',
+      'Firebase',
+      'Firebase functions',
+      'ChatGPT',
+    ],
     production: 'https://apps.shopify.com/chatty',
   },
   {
@@ -43,7 +50,7 @@ export const EXPERIENCES = [
 ]
 
 export const CONTACT = {
-  address: '83 Tan Trieu Street, Ha Noi, Vietnam',
+  address: '102 Tran Phu, Ha Noi, Vietnam',
   phoneNo: '+84 383338589',
   email: 'tuandung13401@gmail.com',
 }
