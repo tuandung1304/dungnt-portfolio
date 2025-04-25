@@ -1,7 +1,8 @@
 'use client'
-import { motion } from 'framer-motion'
 import { projects } from '@/app/constants/projects'
+import { motion } from 'framer-motion'
 import Image from 'next/image'
+import Link from 'next/link'
 
 export default function Projects() {
   return (
@@ -21,15 +22,17 @@ export default function Projects() {
             initial={{ opacity: 0, y: 50 }}
             transition={{ duration: 0.5, delay: index * 0.1 }}
             className="bg-stone-900/50 rounded-lg overflow-hidden border border-stone-800 hover:border-stone-600 transition-colors">
-            <div className="relative h-48">
-              <Image
-                src={project.image}
-                alt={project.title}
-                width={1000}
-                height={1000}
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+            <div className="relative h-48 cursor-pointer">
+              <Link href={project.production} target="_blank">
+                <Image
+                  src={project.image}
+                  alt={project.title}
+                  width={1000}
+                  height={1000}
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+              </Link>
             </div>
             <div className="p-6">
               <h3 className="text-xl font-semibold mb-2">{project.title}</h3>

@@ -3,6 +3,7 @@ export interface Project {
   description: string
   image: string
   technologies: string[]
+  production: string
 }
 
 export const projects: Project[] = [
@@ -18,6 +19,7 @@ export const projects: Project[] = [
       'AI assistant',
       'Google cloud',
     ],
+    production: 'https://apps.shopify.com/chatty',
   },
   {
     title: 'Field Guide',
@@ -33,6 +35,7 @@ export const projects: Project[] = [
       'Jest',
       'Storybook',
     ],
+    production: 'https://www.fieldguide.io',
   },
   {
     title: 'Luci',
@@ -45,5 +48,6 @@ export const projects: Project[] = [
       'zustand',
       'react-query',
     ],
+    production: 'https://luci.vn',
   },
 ]
