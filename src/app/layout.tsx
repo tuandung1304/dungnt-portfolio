@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'Dung NT Portfolio',
+  title: 'TuanDung - Portfolio',
   icons: [{ url: '/images/favicon.ico' }],
 }
 

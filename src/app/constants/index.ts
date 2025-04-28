@@ -1,4 +1,7 @@
-export const HERO_CONTENT = `I am a dedicated full-stack developer with over 2 years of experience specializing in TypeScript. My expertise spans across modern front-end and back-end technologies, including React, Next.js, Nestjs, Prisma, Hasura GraphQL, Firebase. I have experience utilizing AWS services to build scalable and secure cloud-based applications. I am passionate about leveraging my skills to build efficient and scalable applications that deliver value to clients and enhance user experiences.`
+export const HERO_CONTENT = `I am a dedicated full-stack developer with over 2 years of experience specializing in TypeScript. 
+  My expertise spans across modern front-end and back-end technologies, including React, Next.js, Nestjs, Prisma, Hasura GraphQL, Firebase. 
+  I have experience utilizing AWS services to build scalable and secure cloud-based applications. 
+  I am passionate about leveraging my skills to build efficient and scalable applications that deliver value to clients and enhance user experiences.`
 
 export const EXPERIENCES = [
   {
@@ -20,7 +23,7 @@ export const EXPERIENCES = [
     year: '2023 - 2024',
     role: 'Full Stack Developer',
     company: 'Zinza Technology (American Outsourced Project)',
-    description: `Developed a comprehensive web application for an accounting business, leveraging modern technologies and frameworks to enhance functionality and user experience.`,
+    description: `Developed a comprehensive web application as SaaS for Advisory & Audit Firms saves time, increases margins, and improves client satisfaction.`,
     technologies: [
       'Typescript',
       'Next.js',

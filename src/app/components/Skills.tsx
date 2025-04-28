@@ -1,6 +1,6 @@
 'use client'
+import { getLevel, skills } from '@/app/constants/skills'
 import { motion } from 'framer-motion'
-import { skills } from '@/app/constants/skills'
 
 export default function Skills() {
   return (
@@ -28,7 +28,9 @@ export default function Skills() {
                   className="bg-stone-900/50 rounded-lg p-4 border border-stone-800">
                   <div className="flex items-center justify-between mb-2">
                     <span className="font-medium">{skill.name}</span>
-                    <span className="text-stone-400">{skill.level}</span>
+                    <span className="text-stone-400">
+                      {getLevel(skill.proficiency)}
+                    </span>
                   </div>
                   <div className="w-full bg-stone-800 rounded-full h-2">
                     <div

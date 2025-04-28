@@ -1,7 +1,6 @@
 export interface Skill {
   name: string
-  level: string
-  proficiency: number
+  proficiency: 10 | 20 | 30 | 40 | 50 | 60 | 70 | 80 | 90
 }
 
 export interface SkillCategory {
@@ -9,32 +8,38 @@ export interface SkillCategory {
   items: Skill[]
 }
 
+export const getLevel = (proficiency: Skill['proficiency']) => {
+  if (proficiency >= 80) return 'Advanced'
+  if (proficiency >= 50) return 'Intermediate'
+  return 'Beginner'
+}
+
 export const skills: SkillCategory[] = [
   {
     name: 'Frontend Development',
     items: [
-      { name: 'React', level: 'Advanced', proficiency: 90 },
-      { name: 'Next.js', level: 'Advanced', proficiency: 75 },
-      { name: 'TypeScript', level: 'Intermediate', proficiency: 90 },
-      { name: 'Tailwind CSS', level: 'Advanced', proficiency: 90 },
+      { name: 'React', proficiency: 90 },
+      { name: 'Next.js', proficiency: 70 },
+      { name: 'TypeScript', proficiency: 90 },
+      { name: 'Tailwind CSS', proficiency: 90 },
     ],
   },
   {
     name: 'Backend Development',
     items: [
-      { name: 'Node.js', level: 'Advanced', proficiency: 90 },
-      { name: 'Nestjs', level: 'Advanced', proficiency: 85 },
-      { name: 'Firebase', level: 'Intermediate', proficiency: 80 },
-      { name: 'PostgreSQL', level: 'Intermediate', proficiency: 70 },
+      { name: 'Express', proficiency: 90 },
+      { name: 'Nestjs', proficiency: 70 },
+      { name: 'GraphQL', proficiency: 80 },
+      { name: 'ORM', proficiency: 80 },
     ],
   },
   {
     name: 'Other Skills',
     items: [
-      { name: 'Git', level: 'Advanced', proficiency: 85 },
-      { name: 'Docker', level: 'Intermediate', proficiency: 65 },
-      { name: 'AWS', level: 'Intermediate', proficiency: 50 },
-      { name: 'CI/CD', level: 'Intermediate', proficiency: 60 },
+      { name: 'Git', proficiency: 80 },
+      { name: 'Docker', proficiency: 70 },
+      { name: 'AWS', proficiency: 60 },
+      { name: 'CI/CD', proficiency: 60 },
     ],
   },
 ]
