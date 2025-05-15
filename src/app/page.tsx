@@ -1,11 +1,12 @@
+import Achievements from '@/app/components/Achievements'
 import Contact from '@/app/components/Contact'
+import Education from '@/app/components/Education'
 import Experience from '@/app/components/Experience'
 import Hero from '@/app/components/Hero'
 import Navbar from '@/app/components/Navbar'
-import Technologies from '@/app/components/Technologies'
 import Projects from '@/app/components/Projects'
 import Skills from '@/app/components/Skills'
-import Education from '@/app/components/Education'
+import Technologies from '@/app/components/Technologies'
 
 export default function App() {
   return (
@@ -24,6 +25,7 @@ export default function App() {
         <Projects />
         <Experience />
         <Education />
+        <Achievements />
         <Contact />
       </div>
     </div>

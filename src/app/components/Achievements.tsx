@@ -13,7 +13,7 @@ export default function Achievements() {
         Achievements & Certifications
       </motion.h2>
       <div className="max-w-4xl mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 gap-8">
           {achievements.map((achievement, index) => (
             <motion.div
               key={achievement.title}

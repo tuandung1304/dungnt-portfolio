@@ -14,15 +14,13 @@ export default function Education() {
       </motion.h2>
       <div className="max-w-4xl mx-auto px-4">
         <div className="relative">
-          <div className="absolute left-0 top-0 w-0.5 h-full bg-stone-800" />
           {education.map((edu, index) => (
             <motion.div
               key={edu.degree}
               whileInView={{ opacity: 1, x: 0 }}
               initial={{ opacity: 0, x: -50 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="relative pl-8 mb-8 last:mb-0">
-              <div className="absolute left-[-5px] top-0 w-3 h-3 rounded-full bg-stone-300" />
+              className="relative mb-8 last:mb-0">
               <div className="bg-stone-900/50 rounded-lg p-6 border border-stone-800">
                 <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
                   <h3 className="text-xl font-semibold">{edu.degree}</h3>
