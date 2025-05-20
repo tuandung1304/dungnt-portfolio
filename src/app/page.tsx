@@ -8,6 +8,8 @@ import Projects from '@/app/components/Projects'
 import Skills from '@/app/components/Skills'
 import Technologies from '@/app/components/Technologies'
 
+export const dynamic = 'force-static'
+
 export default function App() {
   return (
     <div className="overflow-x-hidden text-stone-300 antialiased">
