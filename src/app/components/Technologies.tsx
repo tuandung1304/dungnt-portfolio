@@ -17,12 +17,12 @@ export default function Technologies() {
           y: -100,
         }}
         transition={{ duration: 0.5 }}
-        className="text-center text-4xl tracking-wider my-12">
+        className="my-12 text-center text-4xl tracking-wider">
         Technologies
       </motion.h2>
       <div
         ref={containerRef}
-        className="max-w-4xl m-auto flex flex-wrap items-center justify-center gap-4 sm:gap-7">
+        className="m-auto flex max-w-4xl flex-wrap items-center justify-center gap-4 sm:gap-7">
         {technologies.map(({ name, Icon, color, url = '' }) => (
           <Tooltip
             key={name}
@@ -31,7 +31,7 @@ export default function Technologies() {
             <Link href={url} target="_blank">
               <div style={{ color }} className="icon-container">
                 <Icon className="text-7xl" />
-                <div className="absolute w-10 h-10 opacity-35 bg-current rounded-full blur-[18px]" />
+                <div className="absolute h-10 w-10 rounded-full bg-current opacity-35 blur-[18px]" />
               </div>
             </Link>
           </Tooltip>

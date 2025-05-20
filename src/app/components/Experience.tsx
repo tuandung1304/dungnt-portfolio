@@ -6,7 +6,7 @@ import React from 'react'
 
 export default function Experience() {
   return (
-    <div className="pb-4 mt-20">
+    <div className="mt-20 pb-4">
       <motion.h2
         whileInView={{ opacity: 1, y: 0 }}
         initial={{
@@ -14,7 +14,7 @@ export default function Experience() {
           y: -100,
         }}
         transition={{ duration: 0.5 }}
-        className="text-center text-4xl tracking-wider my-12">
+        className="my-12 text-center text-4xl tracking-wider">
         Experience
       </motion.h2>
       <div>

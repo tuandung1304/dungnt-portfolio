@@ -9,10 +9,10 @@ export default function Education() {
         whileInView={{ opacity: 1, y: 0 }}
         initial={{ opacity: 0, y: -100 }}
         transition={{ duration: 0.5 }}
-        className="text-center text-4xl tracking-wider mb-12">
+        className="mb-12 text-center text-4xl tracking-wider">
         Education
       </motion.h2>
-      <div className="max-w-4xl mx-auto px-4">
+      <div className="mx-auto max-w-4xl px-4">
         <div className="relative">
           {education.map((edu, index) => (
             <motion.div
@@ -21,17 +21,17 @@ export default function Education() {
               initial={{ opacity: 0, x: -50 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
               className="relative mb-8 last:mb-0">
-              <div className="bg-stone-900/50 rounded-lg p-6 border border-stone-800">
-                <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
+              <div className="rounded-lg border border-stone-800 bg-stone-900/50 p-6">
+                <div className="mb-4 flex flex-col md:flex-row md:items-center md:justify-between">
                   <h3 className="text-xl font-semibold">{edu.degree}</h3>
                   <span className="text-stone-400">{edu.period}</span>
                 </div>
-                <p className="text-stone-400 mb-2">{edu.school}</p>
+                <p className="mb-2 text-stone-400">{edu.school}</p>
                 {edu.description && (
                   <p className="text-stone-300">{edu.description}</p>
                 )}
                 {edu.achievements && edu.achievements.length > 0 && (
-                  <ul className="mt-4 list-disc list-inside text-stone-300">
+                  <ul className="mt-4 list-inside list-disc text-stone-300">
                     {edu.achievements.map((achievement, i) => (
                       <li key={i}>{achievement}</li>
                     ))}

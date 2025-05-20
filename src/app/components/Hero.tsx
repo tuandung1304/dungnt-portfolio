@@ -3,10 +3,10 @@ import Link from 'next/link'
 
 export default function Hero() {
   return (
-    <div className="pb-4 mb-16 lg:mb-36">
+    <div className="mb-16 pb-4 lg:mb-36">
       <div className="flex flex-wrap justify-center">
         <div className="w-full lg:w-2/3">
-          <div className="flex flex-col items-center lg:items-start mt-10">
+          <div className="mt-10 flex flex-col items-center lg:items-start">
             <h2 className="pb-2 text-4xl tracking-tighter lg:text-7xl">
               Tuan Dung Nguyen
             </h2>
@@ -21,7 +21,7 @@ export default function Hero() {
               target="_blank"
               rel="noopener noreferrer"
               download
-              className="bg-white rounded-full p-4 text-sm text-stone-800">
+              className="rounded-full bg-white p-4 text-sm text-stone-800">
               Download resume
             </Link>
           </div>

@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "prettier:fix": "prettier . --write"
+    "prettier": "prettier . --write"
   },
   "dependencies": {
     "@emotion/react": "^11.13.5",
@@ -27,6 +27,7 @@
     "eslint-config-next": "15.0.3",
     "postcss": "^8",
     "prettier": "^3.4.1",
+    "prettier-plugin-tailwindcss": "^0.6.11",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
   }
