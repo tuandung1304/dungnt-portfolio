@@ -1,4 +1,5 @@
 import { IconType } from 'react-icons'
+import { FaAws } from 'react-icons/fa6'
 import { RiReactjsLine } from 'react-icons/ri'
 import {
   SiApollographql,
@@ -10,7 +11,6 @@ import {
   SiHasura,
   SiJest,
   SiMui,
-  SiMysql,
   SiNestjs,
   SiPostgresql,
   SiPrisma,
@@ -109,10 +109,10 @@ export const technologies: Technologies[] = [
     url: 'https://firebase.google.com',
   },
   {
-    name: 'Mysql',
-    Icon: SiMysql,
+    name: 'Amazon Web Services',
+    Icon: FaAws,
     color: '#4479A1',
-    url: 'https://www.mysql.com',
+    url: 'https://aws.amazon.com',
   },
   {
     name: 'PostgreSQL',
