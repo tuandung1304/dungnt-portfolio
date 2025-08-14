@@ -6,6 +6,7 @@ export default function Education() {
   return (
     <div className="py-20">
       <motion.h2
+        viewport={{ once: true }}
         whileInView={{ opacity: 1, y: 0 }}
         initial={{ opacity: 0, y: -100 }}
         transition={{ duration: 0.5 }}
@@ -17,6 +18,7 @@ export default function Education() {
           {education.map((edu, index) => (
             <motion.div
               key={edu.degree}
+              viewport={{ once: true }}
               whileInView={{ opacity: 1, x: 0 }}
               initial={{ opacity: 0, x: -50 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}

@@ -6,6 +6,7 @@ export default function Skills() {
   return (
     <div className="py-20">
       <motion.h2
+        viewport={{ once: true }}
         whileInView={{ opacity: 1, y: 0 }}
         initial={{ opacity: 0, y: -100 }}
         transition={{ duration: 0.5 }}
@@ -16,6 +17,7 @@ export default function Skills() {
         {skills.map((category, index) => (
           <motion.div
             key={category.name}
+            viewport={{ once: true }}
             whileInView={{ opacity: 1, y: 0 }}
             initial={{ opacity: 0, y: 50 }}
             transition={{ duration: 0.5, delay: index * 0.1 }}

@@ -8,6 +8,7 @@ export default function Projects() {
   return (
     <div className="py-20">
       <motion.h2
+        viewport={{ once: true }}
         whileInView={{ opacity: 1, y: 0 }}
         initial={{ opacity: 0, y: -100 }}
         transition={{ duration: 0.5 }}
@@ -18,6 +19,7 @@ export default function Projects() {
         {projects.map((project, index) => (
           <motion.div
             key={project.title}
+            viewport={{ once: true }}
             whileInView={{ opacity: 1, y: 0 }}
             initial={{ opacity: 0, y: 50 }}
             transition={{ duration: 0.5, delay: index * 0.1 }}
