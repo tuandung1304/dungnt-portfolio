@@ -26,8 +26,8 @@ export default function App() {
         <Technologies />
         <Projects />
         <Experience />
-        <Education />
         <Achievements />
+        <Education />
         <Contact />
       </div>
     </div>

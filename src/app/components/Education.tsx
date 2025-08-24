@@ -1,4 +1,5 @@
 'use client'
+
 import { education } from '@/app/constants/education'
 import { motion } from 'framer-motion'
 
@@ -29,16 +30,7 @@ export default function Education() {
                   <span className="text-stone-400">{edu.period}</span>
                 </div>
                 <p className="mb-2 text-stone-400">{edu.school}</p>
-                {edu.description && (
-                  <p className="text-stone-300">{edu.description}</p>
-                )}
-                {edu.achievements && edu.achievements.length > 0 && (
-                  <ul className="mt-4 list-inside list-disc text-stone-300">
-                    {edu.achievements.map((achievement, i) => (
-                      <li key={i}>{achievement}</li>
-                    ))}
-                  </ul>
-                )}
+                <p className="text-stone-300">{edu.description}</p>
               </div>
             </motion.div>
           ))}

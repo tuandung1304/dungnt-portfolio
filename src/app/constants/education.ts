@@ -2,8 +2,7 @@ export interface Education {
   degree: string
   school: string
   period: string
-  description?: string
-  achievements?: string[]
+  description: string
 }
 
 export const education: Education[] = [
