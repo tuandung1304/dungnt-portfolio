@@ -29,9 +29,9 @@ export default function Achievements() {
                 <Image
                   src={achievement.image}
                   alt={achievement.title}
-                  width={64}
-                  height={64}
-                  className="hidden sm:block md:h-16 md:w-16"
+                  width={128}
+                  height={128}
+                  className="hidden md:block md:h-20 md:w-20"
                 />
                 <div>
                   <h3 className="mb-2 text-xl font-semibold">

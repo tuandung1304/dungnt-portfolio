@@ -3,7 +3,7 @@ import './globals.css'
 
 export const metadata: Metadata = {
   title: 'TuanDung - Portfolio',
-  icons: [{ url: '/images//dva-c02-badge.png' }],
+  icons: [{ url: '/images/favicon.ico' }],
 }
 
 export default function RootLayout({

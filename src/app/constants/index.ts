@@ -1,4 +1,4 @@
-export const HERO_CONTENT = `I am a dedicated full-stack developer with over 2 years of experience specializing in TypeScript and modern web technologies. 
+export const HERO_CONTENT = `I am a dedicated full-stack developer with nearly 3 years of experience specializing in TypeScript and modern web technologies. 
 My expertise spans across front-end and back-end development using React, Next.js, NestJS, and Hasura GraphQL. 
 I have hands-on experience with Docker, Redis, and Pub/Sub to optimize system performance, scalability, and maintainability. 
 Additionally, I leverage Firebase and AWS services, implementing CI/CD pipelines and serverless architecture to build secure, high-performance cloud applications.`

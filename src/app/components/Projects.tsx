@@ -29,8 +29,8 @@ export default function Projects() {
                 <Image
                   src={project.image}
                   alt={project.title}
-                  width={1000}
-                  height={1000}
+                  width={640}
+                  height={640}
                   className="h-full w-full object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
