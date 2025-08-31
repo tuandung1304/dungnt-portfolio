@@ -1,4 +1,4 @@
-export const HERO_CONTENT = `I am a dedicated full-stack developer with nearly 3 years of experience specializing in TypeScript and modern web technologies. 
+export const HERO_CONTENT = `I am a dedicated full-stack developer with 3 years of experience specializing in TypeScript and modern web technologies. 
 My expertise spans across front-end and back-end development using React, Next.js, NestJS, and Hasura GraphQL. 
 I have hands-on experience with Docker, Redis, and Pub/Sub to optimize system performance, scalability, and maintainability. 
 Additionally, I leverage Firebase and AWS services, implementing CI/CD pipelines and serverless architecture to build secure, high-performance cloud applications.`
@@ -12,9 +12,13 @@ export const EXPERIENCES = [
   `,
     technologies: [
       'Typescript',
-      'React.js',
+      'React',
       'Firebase',
+      'Firestore',
       'Firebase functions',
+      'Redis',
+      'Meilisearch',
+      'Weaviate',
       'ChatGPT',
     ],
     production: 'https://apps.shopify.com/chatty',
@@ -28,9 +32,9 @@ export const EXPERIENCES = [
       'Typescript',
       'Next.js',
       'Hasura',
-      'Graphql',
+      'GraphQL',
       'PostgreSQL',
-      'Nexus',
+      'Codegen',
       'Jest',
       'Storybook',
     ],
@@ -43,8 +47,9 @@ export const EXPERIENCES = [
     description: `Smart City Management Website, Resident Management`,
     technologies: [
       'Typescript',
-      'React.js',
+      'React',
       'Tailwind',
+      'Ant Design',
       'zustand',
       'react-query',
     ],

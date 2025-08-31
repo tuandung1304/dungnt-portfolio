@@ -43,7 +43,7 @@ export const technologies: Technologies[] = [
     url: 'https://react.dev',
   },
   {
-    name: 'Nextjs',
+    name: 'Next.js',
     Icon: TbBrandNextjs,
     color: '#ffffff',
     url: 'https://nextjs.org',
