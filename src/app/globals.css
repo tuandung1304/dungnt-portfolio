@@ -38,6 +38,10 @@
   transition: background-color 0.2s ease-out;
 }
 
+.section-title {
+  @apply mb-8 text-center text-3xl tracking-wider sm:mb-12 sm:text-4xl;
+}
+
 @media screen and (min-width: 400px) {
   .icon-container {
     padding: 16px;

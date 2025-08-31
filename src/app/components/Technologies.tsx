@@ -15,7 +15,7 @@ export default function Technologies() {
         whileInView={{ opacity: 1, y: 0 }}
         initial={{ opacity: 0, y: -100 }}
         transition={{ duration: 0.5 }}
-        className="my-12 text-center text-4xl tracking-wider">
+        className="section-title">
         Technologies
       </motion.h2>
       <div

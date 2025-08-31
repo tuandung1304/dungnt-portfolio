@@ -10,7 +10,7 @@ export default function Skills() {
         whileInView={{ opacity: 1, y: 0 }}
         initial={{ opacity: 0, y: -100 }}
         transition={{ duration: 0.5 }}
-        className="mb-12 text-center text-4xl tracking-wider">
+        className="section-title">
         Skills & Expertise
       </motion.h2>
       <div className="mx-auto max-w-4xl px-4">
@@ -22,7 +22,9 @@ export default function Skills() {
             initial={{ opacity: 0, y: 50 }}
             transition={{ duration: 0.5, delay: index * 0.1 }}
             className="mb-8">
-            <h3 className="mb-4 text-2xl font-semibold">{category.name}</h3>
+            <h3 className="mb-4 text-xl font-semibold sm:text-2xl">
+              {category.name}
+            </h3>
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               {category.items.map((skill) => (
                 <div

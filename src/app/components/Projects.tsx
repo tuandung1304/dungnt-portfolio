@@ -12,7 +12,7 @@ export default function Projects() {
         whileInView={{ opacity: 1, y: 0 }}
         initial={{ opacity: 0, y: -100 }}
         transition={{ duration: 0.5 }}
-        className="mb-12 text-center text-4xl tracking-wider">
+        className="section-title">
         Featured Projects
       </motion.h2>
       <div className="mx-auto grid max-w-6xl grid-cols-1 gap-8 px-4 md:grid-cols-2 lg:grid-cols-3">

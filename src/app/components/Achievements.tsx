@@ -12,7 +12,7 @@ export default function Achievements() {
         whileInView={{ opacity: 1, y: 0 }}
         initial={{ opacity: 0, y: -100 }}
         transition={{ duration: 0.5 }}
-        className="mb-12 text-center text-4xl tracking-wider">
+        className="section-title">
         Certifications
       </motion.h2>
       <div className="mx-auto max-w-4xl px-4">
