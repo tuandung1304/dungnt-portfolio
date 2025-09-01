@@ -1,4 +1,6 @@
 'use client'
+
+import { EXPERIENCES } from '@/app/constants'
 import { projects } from '@/app/constants/projects'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
@@ -40,7 +42,7 @@ export default function Projects() {
               <h3 className="mb-2 text-xl font-semibold">{project.title}</h3>
               <p className="mb-4 text-stone-400">{project.description}</p>
               <div className="mb-4 flex flex-wrap gap-2">
-                {project.technologies.map((tech) => (
+                {EXPERIENCES[index].technologies.map((tech) => (
                   <span
                     key={tech}
                     className="rounded-full bg-stone-800 px-3 py-1 text-sm">
