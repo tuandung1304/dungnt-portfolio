@@ -27,10 +27,10 @@ export const skills: SkillCategory[] = [
   {
     name: 'Backend Development',
     items: [
-      { name: 'Express', proficiency: 90 },
+      { name: 'Express.js', proficiency: 90 },
       { name: 'NestJS', proficiency: 80 },
       { name: 'GraphQL', proficiency: 80 },
-      { name: 'ORM', proficiency: 80 },
+      { name: 'Database & ORM', proficiency: 80 },
     ],
   },
   {
@@ -39,7 +39,7 @@ export const skills: SkillCategory[] = [
       { name: 'Git', proficiency: 90 },
       { name: 'Docker', proficiency: 70 },
       { name: 'AWS', proficiency: 80 },
-      { name: 'CI/CD', proficiency: 70 },
+      { name: 'CI/CD', proficiency: 80 },
     ],
   },
 ]

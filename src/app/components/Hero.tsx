@@ -13,7 +13,7 @@ export default function Hero() {
             <span className="bg-gradient-to-r from-stone-300 to-stone-600 bg-clip-text text-xl tracking-tight text-transparent">
               Fullstack developer
             </span>
-            <p className="my-2 py-6 text-xl leading-relaxed tracking-tighter">
+            <p className="my-2 py-6 text-justify text-xl leading-relaxed tracking-tighter">
               {HERO_CONTENT}
             </p>
             <Link

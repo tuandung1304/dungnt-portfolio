@@ -10,11 +10,13 @@ import {
   SiGraphql,
   SiHasura,
   SiJest,
+  SiMeilisearch,
   SiMui,
   SiNestjs,
   SiPostgresql,
   SiPrisma,
   SiRedis,
+  SiShadcnui,
   SiShopify,
   SiStorybook,
   SiTailwindcss,
@@ -31,7 +33,7 @@ type Technologies = {
 
 export const technologies: Technologies[] = [
   {
-    name: 'Typescript',
+    name: 'TypeScript',
     Icon: SiTypescript,
     color: '#3178C6',
     url: 'https://www.typescriptlang.org',
@@ -55,7 +57,13 @@ export const technologies: Technologies[] = [
     url: 'https://mui.com',
   },
   {
-    name: 'Tailwind',
+    name: 'Shadcn UI',
+    Icon: SiShadcnui,
+    color: '#ffffff',
+    url: 'https://ui.shadcn.com',
+  },
+  {
+    name: 'Tailwind CSS',
     Icon: SiTailwindcss,
     color: '#38BDF8',
     url: 'https://tailwindcss.com',
@@ -67,7 +75,7 @@ export const technologies: Technologies[] = [
     url: 'https://storybook.js.org',
   },
   {
-    name: 'Nestjs',
+    name: 'NestJS',
     Icon: SiNestjs,
     color: '#E0234E',
     url: 'https://nestjs.com',
@@ -85,34 +93,16 @@ export const technologies: Technologies[] = [
     url: 'https://hasura.io',
   },
   {
-    name: 'Apollo',
+    name: 'Apollo GraphQL',
     Icon: SiApollographql,
     color: '#311C87',
     url: 'https://www.apollographql.com',
   },
   {
-    name: 'Graphql',
+    name: 'GraphQL',
     Icon: SiGraphql,
     color: '#E10098',
     url: 'https://graphql.org',
-  },
-  {
-    name: 'Shopify',
-    Icon: SiShopify,
-    color: '#95bf47',
-    url: 'https://www.shopify.com',
-  },
-  {
-    name: 'Firebase',
-    Icon: SiFirebase,
-    color: '#ff9100',
-    url: 'https://firebase.google.com',
-  },
-  {
-    name: 'Amazon Web Services',
-    Icon: FaAws,
-    color: '#4479A1',
-    url: 'https://aws.amazon.com',
   },
   {
     name: 'PostgreSQL',
@@ -121,17 +111,34 @@ export const technologies: Technologies[] = [
     url: 'https://www.postgresql.org',
   },
   {
+    name: 'Prisma',
+    Icon: SiPrisma,
+    color: '#143a51',
+    url: 'https://www.prisma.io',
+  },
+  {
     name: 'Redis',
     Icon: SiRedis,
     color: '#ff4539',
     url: 'https://redis.io',
   },
-  { name: 'Auth0', Icon: SiAuth0, color: '#EC592B', url: 'https://auth0.com' },
   {
-    name: 'Prisma ORM',
-    Icon: SiPrisma,
-    color: '#143a51',
-    url: 'https://www.prisma.io',
+    name: 'Firebase',
+    Icon: SiFirebase,
+    color: '#ff9100',
+    url: 'https://firebase.google.com',
+  },
+  {
+    name: 'Meilisearch',
+    Icon: SiMeilisearch,
+    color: '#ff5894',
+    url: 'https://www.meilisearch.com',
+  },
+  {
+    name: 'Amazon Web Services',
+    Icon: FaAws,
+    color: '#4479A1',
+    url: 'https://aws.amazon.com',
   },
   {
     name: 'Docker',
@@ -139,5 +146,22 @@ export const technologies: Technologies[] = [
     color: '#2496ED',
     url: 'https://www.docker.com/',
   },
-  { name: 'Jest', Icon: SiJest, color: '#C13B29', url: 'https://jestjs.io' },
+  {
+    name: 'Shopify',
+    Icon: SiShopify,
+    color: '#95bf47',
+    url: 'https://www.shopify.com',
+  },
+  {
+    name: 'Auth0',
+    Icon: SiAuth0,
+    color: '#EC592B',
+    url: 'https://auth0.com',
+  },
+  {
+    name: 'Jest',
+    Icon: SiJest,
+    color: '#C13B29',
+    url: 'https://jestjs.io',
+  },
 ]

@@ -11,7 +11,7 @@ export const EXPERIENCES = [
     description: `Contributed to the development of a messaging support software for customers on the Shopify platform, with Facebook integration. Integrating AI for the chat feature helps customers ask questions and search for products that meet their needs.
   `,
     technologies: [
-      'Typescript',
+      'TypeScript',
       'React',
       'Firestore',
       'Firebase functions',
@@ -28,7 +28,7 @@ export const EXPERIENCES = [
     company: 'Zinza Technology (American Outsourced Project)',
     description: `Developed a comprehensive web application as SaaS for Advisory & Audit Firms saves time, increases margins, and improves client satisfaction.`,
     technologies: [
-      'Typescript',
+      'TypeScript',
       'Next.js',
       'Hasura',
       'GraphQL',
@@ -46,12 +46,12 @@ export const EXPERIENCES = [
     company: 'Luci',
     description: `Contributed to the development of a resident management web application for building administrators.`,
     technologies: [
-      'Typescript',
+      'TypeScript',
       'React',
-      'Tailwind',
+      'Tailwind CSS',
       'Ant Design',
       'Redux Toolkit',
-      'react-query',
+      'React Query',
     ],
     production: 'https://luci.vn',
   },

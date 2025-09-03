@@ -1,4 +1,5 @@
 'use client'
+
 import { getLevel, skills } from '@/app/constants/skills'
 import { motion } from 'framer-motion'
 
@@ -11,7 +12,7 @@ export default function Skills() {
         initial={{ opacity: 0, y: -100 }}
         transition={{ duration: 0.5 }}
         className="section-title">
-        Skills & Expertise
+        Skills
       </motion.h2>
       <div className="mx-auto max-w-4xl px-4">
         {skills.map((category, index) => (
