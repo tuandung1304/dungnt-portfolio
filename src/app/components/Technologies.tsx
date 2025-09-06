@@ -1,13 +1,11 @@
 'use client'
+
 import { technologies } from '@/app/constants/technologies'
 import { Tooltip } from '@mui/material'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { useRef } from 'react'
 
 export default function Technologies() {
-  const containerRef = useRef<HTMLDivElement | null>(null)
-
   return (
     <div className="lg:pb-20">
       <motion.h2
@@ -18,9 +16,7 @@ export default function Technologies() {
         className="section-title">
         Technologies
       </motion.h2>
-      <div
-        ref={containerRef}
-        className="m-auto flex max-w-4xl flex-wrap items-center justify-center gap-4 sm:gap-7">
+      <div className="m-auto flex max-w-4xl flex-wrap items-center justify-center gap-4 sm:gap-7">
         {technologies.map(({ name, Icon, color, url = '' }) => (
           <Tooltip
             key={name}
