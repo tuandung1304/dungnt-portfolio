@@ -1,4 +1,5 @@
 import Achievements from '@/app/components/Achievements'
+import Chatbot from '@/app/components/chatbot/Chatbot'
 import Contact from '@/app/components/Contact'
 import Education from '@/app/components/Education'
 import Experience from '@/app/components/Experience'
@@ -30,6 +31,7 @@ export default function App() {
         <Education />
         <Contact />
       </div>
+      <Chatbot />
     </div>
   )
 }
