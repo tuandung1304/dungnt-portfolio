@@ -94,6 +94,7 @@ export default function Chatbot() {
             {/* Messages */}
             <Messages
               messages={messages}
+              setMessages={setMessages}
               isLoading={isLoading}
               streamingMsgId={streamingMsgId}
             />

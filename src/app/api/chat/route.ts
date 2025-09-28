@@ -1,10 +1,13 @@
 import { ResponseChunk } from '@/app/components/chatbot/type'
+import { MessageRole } from '@/generated/prisma'
+import { prisma } from '@/lib/prisma'
 import { NextRequest } from 'next/server'
 import { v4 as uuidv4 } from 'uuid'
 
 export async function POST(request: NextRequest) {
   try {
     const { message } = await request.json()
+    const conversationId = request.headers.get('x-session-id')!
 
     if (!message) {
       return new Response(JSON.stringify({ error: 'Message is required' }), {
@@ -13,17 +16,39 @@ export async function POST(request: NextRequest) {
       })
     }
 
+    let conversation = await prisma.conversation.findUnique({
+      where: {
+        id: conversationId,
+      },
+    })
+
+    if (!conversation) {
+      conversation = await prisma.conversation.create({
+        data: {
+          id: conversationId,
+          title: 'New Conversation',
+        },
+      })
+    }
+
+    await prisma.message.create({
+      data: {
+        text: message,
+        role: MessageRole.user,
+        conversationId,
+      },
+    })
+
     // AI response templates - you can replace this with actual AI service
     const response =
       "Hello! I'm here to help you learn more about TuanDung's portfolio.\nWhat would you like to know?"
-
-    await new Promise((resolve) => setTimeout(resolve, 1000))
 
     // Create a readable stream for streaming response
     const stream = new ReadableStream({
       start(controller) {
         const encoder = new TextEncoder()
         let index = 0
+        let fullResponse = ''
 
         const initialData = JSON.stringify({
           id: uuidv4(),
@@ -37,6 +62,8 @@ export async function POST(request: NextRequest) {
             // Random length between 2-5 characters
             const randomLength = Math.floor(2 + Math.random() * 3)
             const chunk = response.slice(index, index + randomLength)
+            fullResponse += chunk
+
             const data = JSON.stringify({
               type: 'chunk',
               content: chunk,
@@ -52,6 +79,19 @@ export async function POST(request: NextRequest) {
               type: 'complete',
             } satisfies ResponseChunk)
             controller.enqueue(encoder.encode(`data: ${data}\n\n`))
+
+            prisma.message
+              .create({
+                data: {
+                  text: fullResponse,
+                  role: MessageRole.assistant,
+                  conversationId,
+                },
+              })
+              .catch((error) => {
+                console.error('Error saving AI message to database:', error)
+              })
+
             controller.close()
           }
         }
