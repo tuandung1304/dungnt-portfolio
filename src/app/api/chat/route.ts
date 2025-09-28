@@ -5,6 +5,8 @@ import { generateStreamCommand } from '@/services/generateStreamCommand'
 import { canAnswerAI } from '@/utils/canAnswerAi'
 import { NextRequest } from 'next/server'
 import { v4 as uuidv4 } from 'uuid'
+import { getContextMessages } from '@/services/getContextMessages'
+import { saveMessage } from '@/services/saveMessage'
 
 export async function POST(request: NextRequest) {
   try {
@@ -44,31 +46,12 @@ export async function POST(request: NextRequest) {
       })
     }
 
-    const recentMessages = await prisma.message.findMany({
-      where: {
-        conversationId,
-      },
-      orderBy: {
-        createdAt: 'desc',
-      },
-      take: 6,
-      select: {
-        text: true,
-        createdAt: true,
-        role: true,
-      },
+    const contextMessages = await getContextMessages(conversationId)
+    await saveMessage({
+      text: message,
+      role: MessageRole.user,
+      conversationId,
     })
-
-    await prisma.message.create({
-      data: {
-        text: message,
-        role: MessageRole.user,
-        conversationId,
-      },
-    })
-
-    // Reverse to get chronological order (oldest first)
-    const contextMessages = recentMessages.reverse()
 
     // Create a readable stream for streaming response
     const stream = new ReadableStream({
@@ -103,17 +86,11 @@ export async function POST(request: NextRequest) {
         } satisfies ResponseChunk)
         controller.enqueue(encoder.encode(`data: ${completeData}\n\n`))
 
-        prisma.message
-          .create({
-            data: {
-              text: fullResponse,
-              role: MessageRole.assistant,
-              conversationId,
-            },
-          })
-          .catch((error) => {
-            console.error('Error saving AI message to database:', error)
-          })
+        await saveMessage({
+          text: fullResponse,
+          role: MessageRole.assistant,
+          conversationId,
+        })
 
         controller.close()
       },
