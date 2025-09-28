@@ -45,7 +45,8 @@ export default function ChatInput({
       })
 
       if (!response.ok) {
-        throw new Error('Failed to get response')
+        const error = await response.json()
+        throw new Error(error.error)
       }
 
       // Handle streaming response
@@ -101,10 +102,12 @@ export default function ChatInput({
           }
         }
       }
-    } catch {
+    } catch (e) {
       const errorMessage: Message = {
         id: uuidv4(),
-        text: "Sorry, I'm having trouble connecting right now. Please try again later.",
+        text:
+          (e as Error).message ||
+          "Sorry, I'm having trouble connecting right now. Please try again later.",
         role: MessageRole.Assistant,
         createdAt: new Date(),
       }

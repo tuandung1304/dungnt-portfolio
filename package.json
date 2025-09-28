@@ -17,6 +17,7 @@
     "@prisma/client": "^6.16.2",
     "@vercel/analytics": "^1.5.0",
     "framer-motion": "^11.12.0",
+    "ioredis": "^5.8.0",
     "next": "15.0.3",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",

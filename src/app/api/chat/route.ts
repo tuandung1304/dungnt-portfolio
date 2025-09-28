@@ -2,12 +2,14 @@ import { ResponseChunk } from '@/app/components/chatbot/type'
 import { MessageRole } from '@/generated/prisma'
 import { prisma } from '@/lib/prisma'
 import { generateStreamCommand } from '@/services/generateStreamCommand'
+import { canAnswerAI } from '@/utils/canAnswerAi'
 import { NextRequest } from 'next/server'
 import { v4 as uuidv4 } from 'uuid'
 
 export async function POST(request: NextRequest) {
   try {
     const { message } = await request.json()
+    const canAnswer = await canAnswerAI()
     const conversationId = request.headers.get('x-session-id')!
 
     if (!message) {
@@ -15,6 +17,16 @@ export async function POST(request: NextRequest) {
         status: 400,
         headers: { 'Content-Type': 'application/json' },
       })
+    }
+
+    if (!canAnswer) {
+      return new Response(
+        JSON.stringify({ error: 'Reached daily limit for security reasons' }),
+        {
+          status: 400,
+          headers: { 'Content-Type': 'application/json' },
+        },
+      )
     }
 
     let conversation = await prisma.conversation.findUnique({
