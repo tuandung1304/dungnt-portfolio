@@ -1,6 +1,7 @@
 import { ResponseChunk } from '@/app/components/chatbot/type'
 import { MessageRole } from '@/generated/prisma'
 import { prisma } from '@/lib/prisma'
+import { generateStreamCommand } from '@/services/generateStreamCommand'
 import { NextRequest } from 'next/server'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -31,6 +32,21 @@ export async function POST(request: NextRequest) {
       })
     }
 
+    const recentMessages = await prisma.message.findMany({
+      where: {
+        conversationId,
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
+      take: 6,
+      select: {
+        text: true,
+        createdAt: true,
+        role: true,
+      },
+    })
+
     await prisma.message.create({
       data: {
         text: message,
@@ -39,16 +55,18 @@ export async function POST(request: NextRequest) {
       },
     })
 
-    // AI response templates - you can replace this with actual AI service
-    const response =
-      "Hello! I'm here to help you learn more about TuanDung's portfolio.\nWhat would you like to know?"
+    // Reverse to get chronological order (oldest first)
+    const contextMessages = recentMessages.reverse()
 
     // Create a readable stream for streaming response
     const stream = new ReadableStream({
-      start(controller) {
+      async start(controller) {
         const encoder = new TextEncoder()
-        let index = 0
         let fullResponse = ''
+        const bedrockStream = await generateStreamCommand(
+          message,
+          contextMessages,
+        )
 
         const initialData = JSON.stringify({
           id: uuidv4(),
@@ -57,46 +75,35 @@ export async function POST(request: NextRequest) {
         } satisfies ResponseChunk)
         controller.enqueue(encoder.encode(`data: ${initialData}\n\n`))
 
-        const sendChunk = () => {
-          if (index < response.length) {
-            // Random length between 2-5 characters
-            const randomLength = Math.floor(2 + Math.random() * 3)
-            const chunk = response.slice(index, index + randomLength)
-            fullResponse += chunk
-
-            const data = JSON.stringify({
+        for await (const event of bedrockStream!) {
+          if (event.output?.text) {
+            fullResponse += event.output.text
+            const chunk = JSON.stringify({
               type: 'chunk',
-              content: chunk,
+              content: event.output.text,
             } satisfies ResponseChunk)
-            controller.enqueue(encoder.encode(`data: ${data}\n\n`))
-            index += randomLength
-
-            // Random delay between 10-40ms to simulate realistic typing
-            setTimeout(sendChunk, 10 + Math.random() * 30)
-          } else {
-            // Send completion signal
-            const data = JSON.stringify({
-              type: 'complete',
-            } satisfies ResponseChunk)
-            controller.enqueue(encoder.encode(`data: ${data}\n\n`))
-
-            prisma.message
-              .create({
-                data: {
-                  text: fullResponse,
-                  role: MessageRole.assistant,
-                  conversationId,
-                },
-              })
-              .catch((error) => {
-                console.error('Error saving AI message to database:', error)
-              })
-
-            controller.close()
+            controller.enqueue(encoder.encode(`data: ${chunk}\n\n`))
           }
         }
 
-        sendChunk()
+        const completeData = JSON.stringify({
+          type: 'complete',
+        } satisfies ResponseChunk)
+        controller.enqueue(encoder.encode(`data: ${completeData}\n\n`))
+
+        prisma.message
+          .create({
+            data: {
+              text: fullResponse,
+              role: MessageRole.assistant,
+              conversationId,
+            },
+          })
+          .catch((error) => {
+            console.error('Error saving AI message to database:', error)
+          })
+
+        controller.close()
       },
     })
 
