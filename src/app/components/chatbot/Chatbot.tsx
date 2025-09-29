@@ -28,7 +28,7 @@ export default function Chatbot() {
       {/* Floating Chat Button */}
       <motion.button
         onClick={() => setIsOpen(!isOpen)}
-        className={`fixed bottom-6 right-6 z-50 rounded-full p-4 text-white shadow-lg transition-colors duration-200 ${
+        className={`fixed bottom-4 right-4 z-50 rounded-full p-4 text-white shadow-lg transition-colors duration-200 sm:bottom-6 sm:right-6 ${
           isStreaming
             ? 'bg-green-600 hover:bg-green-700'
             : 'bg-blue-600 hover:bg-blue-700'
@@ -87,7 +87,7 @@ export default function Chatbot() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.8 }}
             transition={{ duration: 0.3, ease: 'easeOut' }}
-            className="fixed bottom-28 right-6 z-40 flex h-[550px] w-[400px] flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-2xl dark:border-gray-700 dark:bg-gray-800">
+            className="fixed bottom-24 left-2 right-2 z-40 flex h-[calc(100vh-120px)] flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-2xl sm:bottom-28 sm:left-auto sm:right-6 sm:h-[550px] sm:w-[400px] dark:border-gray-700 dark:bg-gray-800">
             {/* Header */}
             <ChatHeader isStreaming={isStreaming} setIsOpen={setIsOpen} />
 
