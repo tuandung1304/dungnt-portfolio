@@ -1,17 +1,20 @@
 'use client'
 
 import { AnimatePresence, motion } from 'framer-motion'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { FiMessageCircle, FiX } from 'react-icons/fi'
+import { v4 as uuidv4 } from 'uuid'
 import ChatHeader from './ChatHeader'
 import ChatInput from './ChatInput'
 import Messages from './Messages'
-import { Message, MessageRole } from './type'
+import { Message, MessageRole, ResponseChunk } from './type'
 
 export default function Chatbot() {
   const [isOpen, setIsOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [streamingMsgId, setStreamingMsgId] = useState<string | null>(null)
+  const [followUpQuestions, setFollowUpQuestions] = useState<string[]>([])
+  const [hasFetchedMessages, setHasFetchedMessages] = useState(false)
   const [messages, setMessages] = useState<Message[]>([
     {
       id: 'welcome',
@@ -22,6 +25,118 @@ export default function Chatbot() {
   ])
 
   const isStreaming = Boolean(streamingMsgId)
+
+  const handleShowFollowUps = async () => {
+    const response = await fetch('/api/followups')
+    if (!response.ok) {
+      throw new Error('Failed to fetch follow-ups')
+    }
+    const data = await response.json()
+    if (data.questions) {
+      setFollowUpQuestions(data.questions)
+    }
+  }
+
+  const sendMessage = useCallback(
+    async (input: string) => {
+      if (!input.trim() || isLoading || isStreaming) return
+
+      const userMessage: Message = {
+        id: uuidv4(),
+        text: input,
+        role: MessageRole.User,
+        createdAt: new Date(),
+      }
+
+      setIsLoading(true)
+      setMessages((prev) => [...prev, userMessage])
+      setFollowUpQuestions([])
+
+      try {
+        const response = await fetch('/api/chat', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ message: input }),
+        })
+
+        if (!response.ok) {
+          const error = await response.json()
+          throw new Error(error.error)
+        }
+
+        // Handle streaming response
+        const reader = response.body?.getReader()
+        const decoder = new TextDecoder()
+
+        if (!reader) {
+          throw new Error('No reader available')
+        }
+
+        let responseMsgId: string | null = null
+
+        while (true) {
+          const { done, value } = await reader.read()
+
+          if (done) break
+
+          const chunk = decoder.decode(value)
+          const lines = chunk.split('\n')
+
+          for (const line of lines) {
+            if (line.startsWith('data: ')) {
+              try {
+                const data = JSON.parse(line.slice(6)) as ResponseChunk
+
+                if (data.type === 'start') {
+                  responseMsgId = data.id
+                  const streamingMessage: Message = {
+                    id: responseMsgId,
+                    text: '',
+                    role: MessageRole.Assistant,
+                    createdAt: new Date(data.createdAt),
+                  }
+
+                  setMessages((prev) => [...prev, streamingMessage])
+                  setStreamingMsgId(responseMsgId)
+                  setIsLoading(false)
+                } else if (data.type === 'chunk') {
+                  setMessages((prev) =>
+                    prev.map((msg) =>
+                      msg.id === responseMsgId
+                        ? { ...msg, text: msg.text + data.content }
+                        : msg,
+                    ),
+                  )
+                } else if (data.type === 'complete') {
+                  setStreamingMsgId(null)
+                  void handleShowFollowUps()
+                  break
+                }
+              } catch (e) {
+                console.error('Error parsing streaming data:', e)
+              }
+            }
+          }
+        }
+      } catch (e) {
+        const errorMessage: Message = {
+          id: uuidv4(),
+          text:
+            (e as Error).message ||
+            "Sorry, I'm having trouble connecting right now. Please try again later.",
+          role: MessageRole.Assistant,
+          createdAt: new Date(),
+        }
+        setMessages((prev) => [...prev, errorMessage])
+        setStreamingMsgId(null)
+      } finally {
+        setIsLoading(false)
+      }
+    },
+    [isLoading, isStreaming],
+  )
 
   return (
     <>
@@ -97,15 +212,17 @@ export default function Chatbot() {
               setMessages={setMessages}
               isLoading={isLoading}
               streamingMsgId={streamingMsgId}
+              followUpQuestions={followUpQuestions}
+              sendMessage={sendMessage}
+              hasFetchedMessages={hasFetchedMessages}
+              setHasFetchedMessages={setHasFetchedMessages}
             />
 
             {/* Input */}
             <ChatInput
               isLoading={isLoading}
               isStreaming={isStreaming}
-              setMessages={setMessages}
-              setIsLoading={setIsLoading}
-              setStreamingMsgId={setStreamingMsgId}
+              sendMessage={sendMessage}
             />
           </motion.div>
         )}

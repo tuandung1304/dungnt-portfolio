@@ -10,20 +10,39 @@ import {
 import { FiLoader, FiUser } from 'react-icons/fi'
 import { HiChatBubbleLeftRight } from 'react-icons/hi2'
 import AIThinking from './AIThinking'
+import FollowUpChips from './FollowUpChips'
 import { Message, MessageRole } from './type'
 
 interface Props {
   messages: Message[]
   setMessages: Dispatch<SetStateAction<Message[]>>
-  streamingMsgId: string | null
+  sendMessage: (input: string) => void
   isLoading: boolean
+  streamingMsgId: string | null
+  followUpQuestions: string[]
+  hasFetchedMessages: boolean
+  setHasFetchedMessages: Dispatch<SetStateAction<boolean>>
 }
-function Messages({ messages, setMessages, streamingMsgId, isLoading }: Props) {
+
+function Messages({
+  messages,
+  setMessages,
+  sendMessage,
+  streamingMsgId,
+  isLoading,
+  followUpQuestions,
+  hasFetchedMessages,
+  setHasFetchedMessages,
+}: Props) {
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const [isLoadingMessages, setIsLoadingMessages] = useState(false)
-  const [hasFetchedMessages, setHasFetchedMessages] = useState(false)
 
   const isUserRole = (role: MessageRole) => role === MessageRole.User
+
+  const handleFollowUpClick = (question: string) => {
+    sendMessage(question)
+  }
+
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }
@@ -60,11 +79,17 @@ function Messages({ messages, setMessages, streamingMsgId, isLoading }: Props) {
     if (!hasFetchedMessages && messages.length === 1) {
       fetchMessages()
     }
-  }, [hasFetchedMessages, isLoadingMessages, messages.length, setMessages])
+  }, [
+    hasFetchedMessages,
+    isLoadingMessages,
+    messages.length,
+    setHasFetchedMessages,
+    setMessages,
+  ])
 
   useEffect(() => {
     scrollToBottom()
-  }, [messages])
+  }, [messages, followUpQuestions])
 
   return (
     <div className="flex-1 space-y-4 overflow-y-auto p-4">
@@ -125,6 +150,14 @@ function Messages({ messages, setMessages, streamingMsgId, isLoading }: Props) {
             </motion.div>
           ))}
           <AIThinking isLoading={isLoading} isStreaming={!!streamingMsgId} />
+
+          {/* Follow-up Questions */}
+          {followUpQuestions.length > 0 && (
+            <FollowUpChips
+              followUpQuestions={followUpQuestions}
+              onFollowUpClick={handleFollowUpClick}
+            />
+          )}
         </>
       )}
 
