@@ -202,7 +202,7 @@ export default function Chatbot() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.8 }}
             transition={{ duration: 0.3, ease: 'easeOut' }}
-            className="fixed bottom-24 left-2 right-2 z-40 flex h-[calc(100vh-120px)] flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-2xl sm:bottom-28 sm:left-auto sm:right-6 sm:h-[550px] sm:w-[400px] dark:border-gray-700 dark:bg-gray-800">
+            className="fixed bottom-24 left-2 right-2 z-40 flex h-[calc(100dvh-120px)] flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-2xl sm:bottom-28 sm:left-auto sm:right-6 sm:h-[550px] sm:w-[400px] dark:border-gray-700 dark:bg-gray-800">
             {/* Header */}
             <ChatHeader isStreaming={isStreaming} setIsOpen={setIsOpen} />
 
