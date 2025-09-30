@@ -11,6 +11,7 @@ import { FiLoader, FiUser } from 'react-icons/fi'
 import { HiChatBubbleLeftRight } from 'react-icons/hi2'
 import AIThinking from './AIThinking'
 import FollowUpChips from './FollowUpChips'
+import MarkdownRenderer from './MarkdownRenderer'
 import { Message, MessageRole } from './type'
 
 interface Props {
@@ -138,7 +139,13 @@ function Messages({
                       className="mt-0.5 flex-shrink-0"
                     />
                   )}
-                  <p className="whitespace-pre-wrap text-sm">{message.text}</p>
+                  {isUserRole(message.role) ? (
+                    <p className="whitespace-pre-wrap text-sm">
+                      {message.text}
+                    </p>
+                  ) : (
+                    <MarkdownRenderer content={message.text} />
+                  )}
                 </div>
                 <p className="mt-1 text-xs opacity-60">
                   {message.createdAt.toLocaleTimeString([], {
