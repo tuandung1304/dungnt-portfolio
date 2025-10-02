@@ -165,7 +165,7 @@ export default function Chatbot() {
           delay: 1,
           ...(isStreaming && {
             boxShadow: {
-              duration: 1,
+              duration: 2,
               repeat: Infinity,
               ease: 'easeInOut',
             },
