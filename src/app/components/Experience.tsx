@@ -49,7 +49,7 @@ export default function Experience() {
                 {experience.technologies.map((tech, index) => (
                   <span
                     key={index}
-                    className="mr-2 mt-4 rounded bg-stone-900 px-2 py-1 text-sm font-medium text-stone-300">
+                    className="mt-4 mr-2 rounded bg-stone-900 px-2 py-1 text-sm font-medium text-stone-300">
                     {tech}
                   </span>
                 ))}

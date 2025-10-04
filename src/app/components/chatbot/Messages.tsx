@@ -140,7 +140,7 @@ function Messages({
                     />
                   )}
                   {isUserRole(message.role) ? (
-                    <p className="whitespace-pre-wrap text-sm">
+                    <p className="text-sm whitespace-pre-wrap">
                       {message.text}
                     </p>
                   ) : (
