@@ -139,7 +139,7 @@ export default function Chatbot() {
   )
 
   return (
-    <div data-theme="dark">
+    <div className="dark">
       {/* Floating Chat Button */}
       <motion.button
         onClick={() => setIsOpen(!isOpen)}
