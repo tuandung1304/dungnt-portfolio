@@ -1,7 +1,6 @@
 'use client'
 
 import { technologies } from '@/app/constants/technologies'
-import { Tooltip } from '@mui/material'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 
@@ -18,17 +17,12 @@ export default function Technologies() {
       </motion.h2>
       <div className="m-auto flex max-w-4xl flex-wrap items-center justify-center gap-4 sm:gap-7">
         {technologies.map(({ name, Icon, color, url = '' }) => (
-          <Tooltip
-            key={name}
-            enterDelay={500}
-            title={<span className="text-sm">{name}</span>}>
-            <Link href={url} target="_blank">
-              <div style={{ color }} className="icon-container">
-                <Icon className="text-7xl" />
-                <div className="absolute h-10 w-10 rounded-full bg-current opacity-35 blur-[18px]" />
-              </div>
-            </Link>
-          </Tooltip>
+          <Link key={name} href={url} target="_blank">
+            <div style={{ color }} className="icon-container">
+              <Icon className="text-7xl" />
+              <div className="absolute h-10 w-10 rounded-full bg-current opacity-35 blur-[18px]" />
+            </div>
+          </Link>
         ))}
       </div>
     </div>
