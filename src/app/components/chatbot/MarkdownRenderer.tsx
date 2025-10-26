@@ -196,7 +196,9 @@ function MarkdownRenderer({ content }: MarkdownRendererProps) {
   }
 
   return (
-    <div className="markdown-content text-sm">{parseMarkdown(content)}</div>
+    <div className="markdown-content text-sm wrap-anywhere">
+      {parseMarkdown(content)}
+    </div>
   )
 }
 
