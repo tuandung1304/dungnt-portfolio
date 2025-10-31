@@ -46,7 +46,11 @@ export async function generateFollowUps({
     },
   })
 
-  const resp = await runtimeClient.send(command)
-
-  return JSON.parse(resp.output?.text ?? '{questions: []}')
+  try {
+    const resp = await runtimeClient.send(command)
+    return JSON.parse(resp.output?.text ?? '{questions: []}')
+  } catch (error) {
+    console.error('Error parsing follow-ups:', error)
+    return { questions: [] }
+  }
 }

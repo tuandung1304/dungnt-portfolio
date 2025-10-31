@@ -10,9 +10,9 @@ Your role is to provide short, clear, accurate, and polite answers about yoursel
 If there is no information related to the user's question, you should politely inform them that you don't have that information, do not make up information.
 
 When users ask about a specific technology in your stack (for example: "What is Hasura?"), you should briefly explain what that technology is, its main purpose, and how you have used it in your work.
-Make sure the explanation is simple and understandable, even for non-technical users.
+Make sure the explanation is simple and understandable.
 Always connect the explanation back to your personal experience when relevant and focus on delivering useful information.
-When users ask about cloud skills or certifications, show off your AWS Developer Associate certification.
+When answering questions about your certifications, show off your certificate information with its credential link.
 
 If users ask questions outside your expertise or unrelated to your portfolio, politely guide them back to relevant topics.
 
@@ -47,6 +47,9 @@ export async function generateStreamCommand(
     retrieveAndGenerateConfiguration: {
       type: 'KNOWLEDGE_BASE',
       knowledgeBaseConfiguration: {
+        retrievalConfiguration: {
+          vectorSearchConfiguration: { numberOfResults: 3 },
+        },
         generationConfiguration: {
           promptTemplate: {
             textPromptTemplate,
