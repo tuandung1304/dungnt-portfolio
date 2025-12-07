@@ -2,11 +2,11 @@ import { ResponseChunk } from '@/app/components/chatbot/type'
 import { MessageRole } from '@/generated/prisma'
 import { prisma } from '@/lib/prisma'
 import { generateStreamCommand } from '@/services/generateStreamCommand'
+import { getContextMessages } from '@/services/getContextMessages'
+import { saveMessage } from '@/services/saveMessage'
 import { canAnswerAI } from '@/utils/canAnswerAi'
 import { NextRequest } from 'next/server'
 import { v4 as uuidv4 } from 'uuid'
-import { getContextMessages } from '@/services/getContextMessages'
-import { saveMessage } from '@/services/saveMessage'
 
 export async function POST(request: NextRequest) {
   try {

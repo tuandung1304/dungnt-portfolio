@@ -1,4 +1,3 @@
-import React from 'react'
 import { motion } from 'framer-motion'
 import { HiChatBubbleLeftRight } from 'react-icons/hi2'
 
