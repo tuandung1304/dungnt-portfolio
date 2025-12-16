@@ -1,7 +1,6 @@
 import Link from 'next/link'
 import { CgVercel } from 'react-icons/cg'
 import { FaLinkedinIn } from 'react-icons/fa'
-import { FaSquareUpwork } from 'react-icons/fa6'
 
 export default function Navbar() {
   return (
@@ -17,12 +16,6 @@ export default function Navbar() {
           target="_blank"
           rel="noopener noreferrer">
           <FaLinkedinIn />
-        </Link>
-        <Link
-          href="https://www.upwork.com/freelancers/~01fbeb8d18ec6533c2"
-          target="_blank"
-          rel="noopener noreferrer">
-          <FaSquareUpwork />
         </Link>
       </div>
     </nav>
