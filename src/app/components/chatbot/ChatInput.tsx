@@ -6,6 +6,7 @@ interface Props {
   isStreaming: boolean
   isLoading: boolean
   sendMessage: (input: string) => void
+  autoFocus?: boolean
 }
 
 const MAX_LENGTH = 1000
@@ -15,6 +16,7 @@ export default function ChatInput({
   isStreaming,
   isLoading,
   sendMessage,
+  autoFocus,
 }: Props) {
   const [input, setInput] = useState('')
   const textareaRef = useRef<HTMLTextAreaElement>(null)
@@ -27,6 +29,12 @@ export default function ChatInput({
     const maxHeight = lineHeight * MAX_ROWS
     el.style.height = `${Math.min(el.scrollHeight, maxHeight)}px`
   }, [input])
+
+  useEffect(() => {
+    if (autoFocus) {
+      textareaRef.current?.focus()
+    }
+  }, [autoFocus])
 
   const handleSendMessage = () => {
     const trimmed = input.trim()

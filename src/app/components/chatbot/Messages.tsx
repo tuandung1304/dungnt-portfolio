@@ -3,15 +3,17 @@ import {
   Dispatch,
   memo,
   SetStateAction,
+  useCallback,
   useEffect,
   useRef,
   useState,
 } from 'react'
-import { FiLoader, FiUser } from 'react-icons/fi'
+import { FiCheck, FiCopy, FiUser } from 'react-icons/fi'
 import { HiChatBubbleLeftRight } from 'react-icons/hi2'
 import AIThinking from './AIThinking'
 import FollowUpChips from './FollowUpChips'
 import MarkdownRenderer from './MarkdownRenderer'
+import QuickPrompts from './QuickPrompts'
 import { Message, MessageRole } from './type'
 
 interface Props {
@@ -37,16 +39,24 @@ function Messages({
 }: Props) {
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const [isLoadingMessages, setIsLoadingMessages] = useState(false)
+  const [copiedId, setCopiedId] = useState<string | null>(null)
 
   const isUserRole = (role: MessageRole) => role === MessageRole.User
+  const isStreaming = Boolean(streamingMsgId)
 
   const handleFollowUpClick = (question: string) => {
     sendMessage(question)
   }
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
-  }
+  const handleCopy = useCallback(async (message: Message) => {
+    try {
+      await navigator.clipboard.writeText(message.text)
+      setCopiedId(message.id)
+      window.setTimeout(() => setCopiedId(null), 1500)
+    } catch (err) {
+      console.error('Copy failed:', err)
+    }
+  }, [])
 
   useEffect(() => {
     const fetchMessages = async () => {
@@ -89,83 +99,94 @@ function Messages({
   ])
 
   useEffect(() => {
-    scrollToBottom()
-  }, [messages, followUpQuestions])
+    messagesEndRef.current?.scrollIntoView({
+      behavior: isStreaming ? 'auto' : 'smooth',
+    })
+  }, [messages, followUpQuestions, isStreaming])
+
+  const showQuickPrompts =
+    !isLoading &&
+    !isStreaming &&
+    hasFetchedMessages &&
+    messages.length === 1 &&
+    messages[0].id === 'welcome'
 
   return (
-    <div className="flex-1 space-y-4 overflow-y-auto p-4">
-      {isLoadingMessages ? (
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="flex justify-start">
-          <div className="max-w-xs rounded-lg bg-gray-100 px-3 py-2 dark:bg-gray-700">
-            <div className="flex items-center space-x-2">
-              <FiLoader
-                size={16}
-                className="mt-0.5 flex-shrink-0 animate-spin text-gray-400"
-              />
-              <span className="text-sm text-gray-500">Loading messages...</span>
-            </div>
-          </div>
-        </motion.div>
-      ) : (
-        <>
-          {messages.map((message) => (
-            <motion.div
-              key={message.id}
-              initial={{ opacity: 0, y: 10, scale: 0.95 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{
-                duration: 0.4,
-                ease: 'easeOut',
-                ...(message.id === streamingMsgId && {
-                  transition: { duration: 0.1 },
-                }),
-              }}
-              className={`flex ${isUserRole(message.role) ? 'justify-end' : 'justify-start'}`}>
-              <div
-                className={`max-w-xs rounded-lg px-3 py-2 ${
-                  isUserRole(message.role)
-                    ? 'bg-blue-600 text-white'
-                    : 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200'
-                }`}>
-                <div className="flex items-start space-x-2">
-                  {isUserRole(message.role) ? (
-                    <FiUser size={16} className="mt-0.5 flex-shrink-0" />
-                  ) : (
-                    <HiChatBubbleLeftRight
-                      size={16}
-                      className="mt-0.5 flex-shrink-0"
-                    />
-                  )}
-                  {isUserRole(message.role) ? (
-                    <p className="text-sm whitespace-pre-wrap">
-                      {message.text}
-                    </p>
-                  ) : (
-                    <MarkdownRenderer content={message.text} />
-                  )}
-                </div>
-                <p className="mt-1 text-xs opacity-60">
+    <div
+      className="flex-1 space-y-4 overflow-y-auto p-4"
+      role="log"
+      aria-live="polite"
+      aria-relevant="additions">
+      {messages.map((message) => {
+        const userMessage = isUserRole(message.role)
+        const isCopied = copiedId === message.id
+        return (
+          <motion.div
+            key={message.id}
+            initial={{ opacity: 0, y: 10, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{
+              duration: 0.4,
+              ease: 'easeOut',
+              ...(message.id === streamingMsgId && {
+                transition: { duration: 0.1 },
+              }),
+            }}
+            className={`group flex ${userMessage ? 'justify-end' : 'justify-start'}`}>
+            <div
+              className={`max-w-xs rounded-lg px-3 py-2 ${
+                userMessage
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200'
+              }`}>
+              <div className="flex items-start space-x-2">
+                {userMessage ? (
+                  <FiUser size={16} className="mt-0.5 flex-shrink-0" />
+                ) : (
+                  <HiChatBubbleLeftRight
+                    size={16}
+                    className="mt-0.5 flex-shrink-0"
+                  />
+                )}
+                {userMessage ? (
+                  <p className="text-sm whitespace-pre-wrap">{message.text}</p>
+                ) : (
+                  <MarkdownRenderer content={message.text} />
+                )}
+              </div>
+              <div className="mt-1 flex items-center justify-between gap-2">
+                <p className="text-xs opacity-60">
                   {message.createdAt.toLocaleTimeString([], {
                     hour: '2-digit',
                     minute: '2-digit',
                   })}
                 </p>
+                {!userMessage &&
+                  message.id !== 'welcome' &&
+                  message.id !== streamingMsgId &&
+                  message.text && (
+                    <button
+                      onClick={() => handleCopy(message)}
+                      aria-label={isCopied ? 'Copied' : 'Copy message'}
+                      className="rounded p-1 text-gray-500 opacity-0 transition-opacity group-hover:opacity-100 hover:bg-gray-200 focus:opacity-100 dark:text-gray-400 dark:hover:bg-gray-600">
+                      {isCopied ? <FiCheck size={12} /> : <FiCopy size={12} />}
+                    </button>
+                  )}
               </div>
-            </motion.div>
-          ))}
-          <AIThinking isLoading={isLoading} isStreaming={!!streamingMsgId} />
+            </div>
+          </motion.div>
+        )
+      })}
 
-          {/* Follow-up Questions */}
-          {followUpQuestions.length > 0 && (
-            <FollowUpChips
-              followUpQuestions={followUpQuestions}
-              onFollowUpClick={handleFollowUpClick}
-            />
-          )}
-        </>
+      <AIThinking isLoading={isLoading} isStreaming={isStreaming} />
+
+      {showQuickPrompts && <QuickPrompts onSelect={sendMessage} />}
+
+      {followUpQuestions.length > 0 && (
+        <FollowUpChips
+          followUpQuestions={followUpQuestions}
+          onFollowUpClick={handleFollowUpClick}
+        />
       )}
 
       <div ref={messagesEndRef} />
