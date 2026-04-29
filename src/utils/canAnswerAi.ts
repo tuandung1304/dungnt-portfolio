@@ -1,17 +1,29 @@
 import redis from '@/lib/redis'
 
-const DAILY_LIMIT = 150
+const GLOBAL_DAILY_LIMIT = 500
+const PER_SESSION_DAILY_LIMIT = 25
+const ONE_DAY_SECONDS = 60 * 60 * 24
 
-export async function canAnswerAI(): Promise<boolean> {
+export async function canAnswerAI(sessionId: string): Promise<boolean> {
   const today = new Date().toISOString().slice(0, 10)
-  // ai:answers:2025-09-28
-  const key = `ai:answers:${today}`
+  const globalKey = `ai:answers:${today}`
+  const sessionKey = `ai:answers:${today}:${sessionId}`
 
-  const current = await redis.incr(key)
+  const [globalCount, sessionCount] = await Promise.all([
+    redis.incr(globalKey),
+    redis.incr(sessionKey),
+  ])
 
-  if (current === 1) {
-    await redis.expire(key, 60 * 60 * 24) // 24h
-  }
+  await Promise.all([
+    globalCount === 1
+      ? redis.expire(globalKey, ONE_DAY_SECONDS)
+      : Promise.resolve(),
+    sessionCount === 1
+      ? redis.expire(sessionKey, ONE_DAY_SECONDS)
+      : Promise.resolve(),
+  ])
 
-  return current <= DAILY_LIMIT
+  return (
+    globalCount <= GLOBAL_DAILY_LIMIT && sessionCount <= PER_SESSION_DAILY_LIMIT
+  )
 }

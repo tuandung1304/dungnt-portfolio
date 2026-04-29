@@ -18,7 +18,7 @@ export default function Chatbot() {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: 'welcome',
-      text: "Hello! I'm here to help you learn more about my portfolio. Feel free to ask me anything about my work, skills or experience.",
+      text: "Hi! I'm Tuan Dung's AI assistant. Ask me anything about his skills, projects, work experience, or how to get in touch.",
       role: MessageRole.Assistant,
       createdAt: new Date(),
     },

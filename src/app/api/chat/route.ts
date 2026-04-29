@@ -8,41 +8,50 @@ import { canAnswerAI } from '@/utils/canAnswerAi'
 import { NextRequest } from 'next/server'
 import { v4 as uuidv4 } from 'uuid'
 
+const MAX_MESSAGE_LENGTH = 1000
+
+function jsonError(error: string, status: number) {
+  return new Response(JSON.stringify({ error }), {
+    status,
+    headers: { 'Content-Type': 'application/json' },
+  })
+}
+
 export async function POST(request: NextRequest) {
   try {
-    const { message } = await request.json()
-    const canAnswer = await canAnswerAI()
-    const conversationId = request.headers.get('x-session-id')!
-
-    if (!message) {
-      return new Response(JSON.stringify({ error: 'Message is required' }), {
-        status: 400,
-        headers: { 'Content-Type': 'application/json' },
-      })
+    const conversationId = request.headers.get('x-session-id')
+    if (!conversationId) {
+      return jsonError('Session not initialized', 400)
     }
 
+    const body = await request.json().catch(() => null)
+    const message = typeof body?.message === 'string' ? body.message.trim() : ''
+
+    if (!message) {
+      return jsonError('Message is required', 400)
+    }
+    if (message.length > MAX_MESSAGE_LENGTH) {
+      return jsonError(
+        `Message is too long (max ${MAX_MESSAGE_LENGTH} characters)`,
+        400,
+      )
+    }
+
+    const canAnswer = await canAnswerAI(conversationId)
     if (!canAnswer) {
-      return new Response(
-        JSON.stringify({ error: 'Reached daily limit for security reasons' }),
-        {
-          status: 400,
-          headers: { 'Content-Type': 'application/json' },
-        },
+      return jsonError(
+        'Daily message limit reached. Please try again tomorrow.',
+        429,
       )
     }
 
     let conversation = await prisma.conversation.findUnique({
-      where: {
-        id: conversationId,
-      },
+      where: { id: conversationId },
     })
 
     if (!conversation) {
       conversation = await prisma.conversation.create({
-        data: {
-          id: conversationId,
-          title: 'New Conversation',
-        },
+        data: { id: conversationId, title: 'New Conversation' },
       })
     }
 
@@ -53,7 +62,6 @@ export async function POST(request: NextRequest) {
       conversationId,
     })
 
-    // Create a readable stream for streaming response
     const stream = new ReadableStream({
       async start(controller) {
         const encoder = new TextEncoder()
@@ -99,18 +107,13 @@ export async function POST(request: NextRequest) {
     return new Response(stream, {
       headers: {
         'Content-Type': 'text/event-stream',
-        'Cache-Control': 'no-cache',
+        'Cache-Control': 'no-cache, no-transform',
         Connection: 'keep-alive',
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'POST',
-        'Access-Control-Allow-Headers': 'Content-Type',
+        'X-Accel-Buffering': 'no',
       },
     })
   } catch (error) {
     console.error('Chat API error:', error)
-    return new Response(JSON.stringify({ error: 'Internal server error' }), {
-      status: 500,
-      headers: { 'Content-Type': 'application/json' },
-    })
+    return jsonError('Internal server error', 500)
   }
 }

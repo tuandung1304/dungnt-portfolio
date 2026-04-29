@@ -1,205 +1,207 @@
-import React, { memo } from 'react'
+import React, { memo, useMemo } from 'react'
 
 interface MarkdownRendererProps {
   content: string
 }
 
+const SAFE_URL_PATTERN = /^(https?:|mailto:|tel:|\/|#)/i
+
+function safeHref(url: string): string | null {
+  const trimmed = url.trim()
+  if (!trimmed) return null
+  if (!SAFE_URL_PATTERN.test(trimmed)) return null
+  return trimmed
+}
+
 function MarkdownRenderer({ content }: MarkdownRendererProps) {
-  const parseMarkdown = (text: string): React.ReactNode[] => {
-    const lines = text.split('\n')
-    const elements: React.ReactNode[] = []
-    let currentListItems: string[] = []
+  const rendered = useMemo(() => parseMarkdown(content), [content])
 
-    const flushList = () => {
-      if (currentListItems.length > 0) {
-        elements.push(
-          <ul
-            key={`list-${elements.length}`}
-            className="my-1 list-inside list-disc space-y-1">
-            {currentListItems.map((item, index) => (
-              <li key={index}>
-                <span className="relative -left-1">
-                  {parseInlineMarkdown(item)}
-                </span>
-              </li>
-            ))}
-          </ul>,
-        )
-        currentListItems = []
-      }
-    }
+  return (
+    <div className="markdown-content text-sm wrap-anywhere">{rendered}</div>
+  )
+}
 
-    lines.forEach((line, index) => {
-      // Xử lý headers
-      if (line.startsWith('### ')) {
-        flushList()
-        elements.push(
-          <h3 key={index} className="text-base font-semibold">
-            {parseInlineMarkdown(line.substring(4))}
-          </h3>,
-        )
-        return
-      }
+function parseMarkdown(text: string): React.ReactNode[] {
+  const lines = text.split('\n')
+  const elements: React.ReactNode[] = []
+  let currentListItems: string[] = []
 
-      if (line.startsWith('## ')) {
-        flushList()
-        elements.push(
-          <h2 key={index} className="text-lg font-semibold">
-            {parseInlineMarkdown(line.substring(3))}
-          </h2>,
-        )
-        return
-      }
-
-      if (line.startsWith('# ')) {
-        flushList()
-        elements.push(
-          <h1 key={index} className="text-xl font-bold">
-            {parseInlineMarkdown(line.substring(2))}
-          </h1>,
-        )
-        return
-      }
-
-      // Xử lý list items
-      if (line.trim().startsWith('- ') || line.trim().startsWith('* ')) {
-        currentListItems.push(line.trim().substring(2))
-        return
-      }
-
-      // Xử lý empty line
-      if (line.trim() === '') {
-        flushList()
-        elements.push(<div key={`br-${index}`} className="h-2" />)
-        return
-      }
-
-      // Xử lý paragraph
-      flushList()
+  const flushList = () => {
+    if (currentListItems.length > 0) {
       elements.push(
-        <p key={index} className="my-1 text-sm first:mt-0">
-          {parseInlineMarkdown(line)}
-        </p>,
+        <ul
+          key={`list-${elements.length}`}
+          className="my-1 list-inside list-disc space-y-1">
+          {currentListItems.map((item, index) => (
+            <li key={index}>
+              <span className="relative -left-1">
+                {parseInlineMarkdown(item)}
+              </span>
+            </li>
+          ))}
+        </ul>,
       )
-    })
-
-    // Flush remaining items
-    flushList()
-
-    return elements
+      currentListItems = []
+    }
   }
 
-  // Hàm để parse inline markdown (bold, italic, links, code)
-  const parseInlineMarkdown = (text: string): React.ReactNode[] => {
-    const elements: React.ReactNode[] = []
-    let currentIndex = 0
+  lines.forEach((line, index) => {
+    if (line.startsWith('### ')) {
+      flushList()
+      elements.push(
+        <h3 key={index} className="text-base font-semibold">
+          {parseInlineMarkdown(line.substring(4))}
+        </h3>,
+      )
+      return
+    }
 
-    // Regex patterns for different markdown elements - sắp xếp theo độ ưu tiên
-    const patterns = [
-      { regex: /\*\*(.*?)\*\*/g, type: 'bold' },
-      { regex: /(?:^|[^*])\*([^*]+?)\*(?:[^*]|$)/g, type: 'italic' },
-      { regex: /\[([^\]]+)\]\(([^)]+)\)/g, type: 'link' },
-    ]
+    if (line.startsWith('## ')) {
+      flushList()
+      elements.push(
+        <h2 key={index} className="text-lg font-semibold">
+          {parseInlineMarkdown(line.substring(3))}
+        </h2>,
+      )
+      return
+    }
 
-    // Tìm tất cả matches
-    const matches: Array<{
-      start: number
-      end: number
-      type: string
-      content: string
-      url?: string
-    }> = []
+    if (line.startsWith('# ')) {
+      flushList()
+      elements.push(
+        <h1 key={index} className="text-xl font-bold">
+          {parseInlineMarkdown(line.substring(2))}
+        </h1>,
+      )
+      return
+    }
 
-    patterns.forEach(({ regex, type }) => {
-      let match: RegExpExecArray | null
-      const regexCopy = new RegExp(regex.source, regex.flags)
-      while ((match = regexCopy.exec(text)) !== null) {
-        // Kiểm tra xem match có bị overlap với match khác không
-        const isOverlapping = matches.some(
-          (existingMatch) =>
-            match!.index < existingMatch.end &&
-            match!.index + match![0].length > existingMatch.start,
+    if (line.trim().startsWith('- ') || line.trim().startsWith('* ')) {
+      currentListItems.push(line.trim().substring(2))
+      return
+    }
+
+    if (line.trim() === '') {
+      flushList()
+      elements.push(<div key={`br-${index}`} className="h-2" />)
+      return
+    }
+
+    flushList()
+    elements.push(
+      <p key={index} className="my-1 text-sm first:mt-0">
+        {parseInlineMarkdown(line)}
+      </p>,
+    )
+  })
+
+  flushList()
+
+  return elements
+}
+
+function parseInlineMarkdown(text: string): React.ReactNode[] {
+  const elements: React.ReactNode[] = []
+  let currentIndex = 0
+
+  const matches: Array<{
+    start: number
+    end: number
+    type: 'bold' | 'italic' | 'link' | 'code'
+    content: string
+    url?: string
+  }> = []
+
+  const patterns: Array<{
+    regex: RegExp
+    type: 'bold' | 'italic' | 'link' | 'code'
+  }> = [
+    { regex: /\[([^\]]+)\]\(([^)\s]+)\)/g, type: 'link' },
+    { regex: /\*\*([^*]+?)\*\*/g, type: 'bold' },
+    { regex: /`([^`]+)`/g, type: 'code' },
+    { regex: /(?<![*\w])\*([^*\n]+?)\*(?!\w)/g, type: 'italic' },
+  ]
+
+  patterns.forEach(({ regex, type }) => {
+    const regexCopy = new RegExp(regex.source, regex.flags)
+    let match: RegExpExecArray | null
+    while ((match = regexCopy.exec(text)) !== null) {
+      const start = match.index
+      const end = match.index + match[0].length
+      const overlaps = matches.some((m) => start < m.end && end > m.start)
+      if (overlaps) continue
+
+      matches.push({
+        start,
+        end,
+        type,
+        content: match[1],
+        url: type === 'link' ? match[2] : undefined,
+      })
+    }
+  })
+
+  matches.sort((a, b) => a.start - b.start)
+
+  matches.forEach((match, index) => {
+    if (currentIndex < match.start) {
+      elements.push(text.slice(currentIndex, match.start))
+    }
+
+    switch (match.type) {
+      case 'bold':
+        elements.push(
+          <strong key={`bold-${index}`} className="font-semibold">
+            {match.content}
+          </strong>,
         )
-
-        if (!isOverlapping) {
-          let start = match!.index
-          let end = match!.index + match![0].length
-          let content = match![1]
-
-          // Điều chỉnh cho italic matches vì regex bao gồm thêm ký tự
-          if (type === 'italic') {
-            start += 1 // Bỏ qua ký tự đầu
-            end -= 1 // Bỏ qua ký tự cuối
-            content = match![1] // Content đã đúng
-          }
-
-          matches.push({
-            start,
-            end,
-            type,
-            content,
-            url: type === 'link' ? match![2] : undefined,
-          })
-        }
-      }
-    })
-
-    // Sắp xếp matches theo vị trí
-    matches.sort((a, b) => a.start - b.start)
-
-    // Render text với các markdown elements
-    matches.forEach((match, index) => {
-      // Thêm text trước match
-      if (currentIndex < match.start) {
-        elements.push(text.slice(currentIndex, match.start))
-      }
-
-      // Render match
-      switch (match.type) {
-        case 'bold':
-          elements.push(
-            <strong key={`bold-${index}`} className="font-semibold">
-              {match.content}
-            </strong>,
-          )
-          break
-        case 'italic':
-          elements.push(
-            <em key={`italic-${index}`} className="italic">
-              {match.content}
-            </em>,
-          )
-          break
-        case 'link':
+        break
+      case 'italic':
+        elements.push(
+          <em key={`italic-${index}`} className="italic">
+            {match.content}
+          </em>,
+        )
+        break
+      case 'code':
+        elements.push(
+          <code
+            key={`code-${index}`}
+            className="rounded bg-gray-200 px-1 py-0.5 font-mono text-xs dark:bg-gray-600">
+            {match.content}
+          </code>,
+        )
+        break
+      case 'link': {
+        const href = match.url ? safeHref(match.url) : null
+        if (href) {
           elements.push(
             <a
               key={`link-${index}`}
-              href={match.url}
+              href={href}
               target="_blank"
               rel="noopener noreferrer"
               className="text-blue-600 no-underline hover:underline dark:text-blue-400">
               {match.content}
             </a>,
           )
-          break
+        } else {
+          elements.push(
+            <span key={`link-${index}`}>{match.content}</span>,
+          )
+        }
+        break
       }
-
-      currentIndex = match.end
-    })
-
-    // Thêm text còn lại
-    if (currentIndex < text.length) {
-      elements.push(text.slice(currentIndex))
     }
 
-    return elements.length > 0 ? elements : [text]
+    currentIndex = match.end
+  })
+
+  if (currentIndex < text.length) {
+    elements.push(text.slice(currentIndex))
   }
 
-  return (
-    <div className="markdown-content text-sm wrap-anywhere">
-      {parseMarkdown(content)}
-    </div>
-  )
+  return elements.length > 0 ? elements : [text]
 }
 
 export default memo(MarkdownRenderer)
