@@ -31,6 +31,7 @@ export default function Achievements() {
                   alt={achievement.title}
                   width={128}
                   height={128}
+                  sizes="80px"
                   className="hidden md:block md:h-20 md:w-20"
                 />
                 <div>

@@ -17,7 +17,7 @@ export default function Hero() {
               {HERO_CONTENT}
             </p>
             <Link
-              href="dungnt-fullstack-cv.pdf"
+              href="/dungnt-fullstack-cv.pdf"
               target="_blank"
               rel="noopener noreferrer"
               download

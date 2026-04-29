@@ -31,7 +31,8 @@ export default function Projects() {
                   src={project.image}
                   alt={project.title}
                   width={640}
-                  height={640}
+                  height={360}
+                  sizes="(min-width: 1024px) 380px, (min-width: 768px) 50vw, 100vw"
                   className="h-full w-full object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
