@@ -16,30 +16,57 @@ export const getLevel = (proficiency: Skill['proficiency']) => {
 
 export const skills: SkillCategory[] = [
   {
-    name: 'Frontend Development',
+    name: 'Frontend',
     items: [
-      { name: 'React', proficiency: 90 },
-      { name: 'Next.js', proficiency: 80 },
-      { name: 'TypeScript', proficiency: 90 },
-      { name: 'Tailwind CSS', proficiency: 90 },
+      {
+        name: 'React (hooks, context, memoization, code splitting, i18n)',
+        proficiency: 90,
+      },
+      { name: 'Next.js (SSR, SSG, ISR, App Router)', proficiency: 80 },
+      {
+        name: 'UI Libraries (Material UI, Shadcn, Ant Design)',
+        proficiency: 90,
+      },
+      { name: 'Tailwind CSS, Framer Motion', proficiency: 90 },
     ],
   },
   {
-    name: 'Backend Development',
+    name: 'Backend',
     items: [
-      { name: 'Express.js', proficiency: 90 },
-      { name: 'NestJS', proficiency: 80 },
-      { name: 'GraphQL', proficiency: 80 },
-      { name: 'Database & ORM', proficiency: 80 },
+      { name: 'REST & GraphQL (NestJS, Express, Hasura)', proficiency: 80 },
+      {
+        name: 'Auth & Security (JWT, OAuth2, OIDC, RBAC, Rate limiting)',
+        proficiency: 80,
+      },
+      {
+        name: 'Event-driven (Redis, SQS, SNS, Pub/Sub, Cloud Tasks)',
+        proficiency: 80,
+      },
+      {
+        name: 'Chatbot & Agent (RAG, pgVector, Weaviate, LangChain, LangGraph, Bedrock)',
+        proficiency: 80,
+      },
     ],
   },
   {
-    name: 'Other Skills',
+    name: 'Databases & Search',
     items: [
-      { name: 'Git', proficiency: 90 },
-      { name: 'Docker', proficiency: 70 },
-      { name: 'AWS', proficiency: 80 },
-      { name: 'CI/CD', proficiency: 80 },
+      { name: 'PostgreSQL', proficiency: 80 },
+      { name: 'Firestore, BigQuery', proficiency: 80 },
+      { name: 'Redis, Meilisearch', proficiency: 80 },
+      { name: 'Prisma, TypeORM', proficiency: 80 },
+    ],
+  },
+  {
+    name: 'Cloud & DevOps',
+    items: [
+      {
+        name: 'AWS (EC2, ECS, S3, CloudFront, Lambda, Bedrock)',
+        proficiency: 80,
+      },
+      { name: 'GCP (Functions, Cloud Run, Cloud Tasks)', proficiency: 80 },
+      { name: 'Auto Scaling & Load Balancer', proficiency: 70 },
+      { name: 'CI/CD (GitHub Actions, GitLab CI)', proficiency: 80 },
     ],
   },
 ]

@@ -1,24 +1,27 @@
-export const HERO_CONTENT = `I am a dedicated full-stack developer with over 3 years of experience specializing in TypeScript and modern web technologies.
-My expertise spans across front-end and back-end development using React, Next.js, NestJS. 
-I have hands-on experience with Docker, Redis, Message Queue and Pub/Sub to optimize system performance, scalability, and maintainability.
-Additionally, I leverage Firebase and AWS, implementing CI/CD pipelines and serverless architecture to build secure, high-performance cloud applications.`
+export const HERO_CONTENT = `Full-stack developer with 3+ years of experience in TypeScript and modern web technologies.
+Building scalable applications with React, Next.js, and NestJS.
+Experienced with Docker, Redis, and event-driven architectures, leveraging AWS and GCP with CI/CD.`
 
 export const EXPERIENCES = [
   {
     year: '2024 - Present',
-    role: 'Full Stack Developer',
+    role: 'Full-stack Developer',
     company: 'Avada Group (Shopify App)',
-    description: `Contributed to the development of a messaging support software for customers on the Shopify platform, with Facebook integration. Integrating AI for the chat feature helps customers ask questions and search for products that meet their needs.
-  `,
+    description: `Contributed to a customer messaging SaaS for Shopify merchants, featuring a real-time inbox and an AI-powered support agent for automated responses and product recommendations. Built RAG and multi-agent orchestration with LangGraph over Weaviate and multiple LLMs, unified Messenger/Instagram/WhatsApp via Meta Graph API, and designed event-driven pipelines on Google Pub/Sub and Cloud Tasks with a Redis cache-aside layer to optimize latency.`,
     technologies: [
-      'TypeScript',
       'React',
-      'Firestore',
-      'Firebase functions',
+      'Express',
+      'Firebase',
+      'BigQuery',
+      'Cloud Run',
+      'Cloud Tasks',
       'Redis',
       'Meilisearch',
+      'LangChain',
+      'LangGraph',
       'Weaviate',
-      'OpenAI',
+      'pgVector',
+      'PostgreSQL',
       'S3',
       'CloudFront',
     ],
@@ -26,18 +29,21 @@ export const EXPERIENCES = [
   },
   {
     year: '2023 - 2024',
-    role: 'Full Stack Developer',
+    role: 'Full-stack Developer',
     company: 'Zinza Technology (American Outsourced Project)',
-    description: `Developed a comprehensive web application as SaaS for Advisory & Audit Firms saves time, increases margins, and improves client satisfaction.`,
+    description: `Developed a comprehensive web application for an accounting business. Built responsive interfaces with Next.js and Material UI, backend services with Hasura GraphQL and Express on PostgreSQL, and authentication via Auth0. Automated type-safe development with GraphQL Codegen, wrote unit and integration tests with Jest, and containerized the app with Docker for consistent deployments.`,
     technologies: [
-      'TypeScript',
       'Next.js',
+      'Material UI',
       'Hasura',
-      'GraphQL',
+      'Apollo Server',
+      'Apollo Client',
+      'Express',
       'PostgreSQL',
-      'Codegen',
+      'Auth0',
       'Jest',
       'Storybook',
+      'S3',
       'Docker',
     ],
     production: 'https://www.fieldguide.io',
@@ -46,14 +52,16 @@ export const EXPERIENCES = [
     year: '2022 - 2023',
     role: 'Frontend Developer',
     company: 'Luci',
-    description: `Contributed to the development of a resident management web application for building administrators.`,
+    description: `Contributed to a resident management web application for building administrators, focusing on scalable and maintainable front-end components. Built responsive admin interfaces with React, Ant Design, and Tailwind CSS, managed state with Redux Toolkit, implemented form handling and validation with React Hook Form and Zod, and translated Figma designs into reusable UI components.`,
     technologies: [
-      'TypeScript',
       'React',
-      'Tailwind CSS',
-      'Ant Design',
       'Redux Toolkit',
+      'React Router DOM',
+      'React Hook Form',
+      'Zod',
       'React Query',
+      'Ant Design',
+      'Tailwind CSS',
     ],
     production: 'https://luci.vn',
   },
