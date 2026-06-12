@@ -9,6 +9,15 @@ export interface Achievement {
 
 export const achievements: Achievement[] = [
   {
+    title: 'AWS Certified Solutions Architect – Associate',
+    issuer: 'Amazon Web Services',
+    description:
+      'Demonstrated a comprehensive understanding of AWS services and technologies, with the ability to build secure and robust solutions using architectural design principles based on customer requirements. Capable of strategically designing well-architected distributed systems that are scalable, resilient, efficient, and fault-tolerant.',
+    date: 'June 2026',
+    link: 'https://www.credly.com/badges/302a5275-cdc6-4a07-989a-ae96a384ed06/',
+    image: '/images/ssa-c03.png',
+  },
+  {
     title: 'AWS Certified Developer – Associate',
     issuer: 'Amazon Web Services',
     description:
